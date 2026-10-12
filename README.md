@@ -28,12 +28,7 @@ Au début, choisissez si la deuxième chance est activée. Si elle l’est, chaq
 - `index.html` : les textes et les écrans.
 - `style.css` : les couleurs, les tailles et la mise en page.
 - `script.js` : les tours, le chronomètre, les mots, les décisions et les erreurs.
-- `pseudo-code-simple.txt` : les grandes étapes du jeu.
-- `pseudo-code-detaille.txt` : le jeu étape par étape.
-- `pseudo-code-fonctions.txt` : le rôle des fonctions et des boutons.
-- `LIEN-AVEC-LES-COURS.md` : lien avec les cours OpenClassrooms.
-- `GUIDE-GITHUB.md` : étapes de base pour Git et GitHub.
-- `TESTS-MANUELS.md` : tests à refaire dans le navigateur.
+- `pseudo-code.txt` : le jeu étape par étape.
 
 ## À savoir
 
