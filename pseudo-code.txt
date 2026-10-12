@@ -1,0 +1,94 @@
+LE MOT PASSANT - PSEUDO-CODE DÉTAILLÉ
+
+1. AFFICHER LES ÉCRANS
+    Cacher tous les écrans.
+    Afficher seulement l'écran demandé.
+
+2. PRÉPARER LA CONFIGURATION
+    Lire le nombre de joueurs choisi.
+    Créer un champ pour le nom de chaque joueur.
+    Garder le mot de départ, le temps par tour et l'option de deuxième chance.
+
+3. VÉRIFIER LA CONFIGURATION
+    SI le mot de départ est vide
+        Afficher « Choisis un mot de départ. »
+    SINON SI un nom manque
+        Afficher « Donne un nom à chaque joueur. »
+    SINON
+        Créer la partie.
+    FIN SI
+
+4. CRÉER LA PARTIE
+    Vider l'historique.
+    Créer la liste des joueurs.
+    Pour chaque joueur, noter qu'il est en jeu.
+    Noter si sa deuxième chance est disponible.
+    Ajouter le mot de départ à l'historique.
+    Afficher l'écran du jeu.
+    Afficher le premier joueur et lancer le chronomètre.
+
+5. LIRE LA PROPOSITION
+    Lire le texte écrit par le joueur.
+    Enlever les espaces inutiles et mettre le texte en minuscules pour comparer.
+
+    SI le texte est vide
+        Demander un mot ou une expression.
+    SINON SI c'est le mot de départ ou un mot déjà dans l'historique
+        Traiter une erreur.
+    SINON
+        Chercher les mots qui ressemblent.
+        Garder la proposition dans l'historique avec le statut « En attente ».
+        Arrêter le chronomètre.
+        Afficher la proposition au groupe.
+        Afficher les ressemblances trouvées, s'il y en a.
+    FIN SI
+
+6. CHOISIR SI LE MOT CONVIENT
+    SI le groupe accepte le mot
+        Changer le statut en « Accepté ».
+        Passer au prochain joueur encore en jeu.
+    SINON
+        Changer le statut en « Refusé ».
+        Traiter une erreur.
+    FIN SI
+
+7. CHERCHER LES DOUBLONS ET LES RESSEMBLANCES
+    Pour chaque mot de l'historique
+        Comparer les lettres avec le nouveau mot.
+        SI le mot est identique
+            Le reconnaître comme doublon.
+        SINON SI un mot contient l'autre ou si les débuts se ressemblent
+            Ajouter l'ancien mot à la liste des ressemblances.
+        FIN SI
+    FIN POUR
+    Le programme montre les ressemblances, mais ne choisit pas à la place du groupe.
+
+8. TRAITER UNE ERREUR
+    Arrêter le chronomètre.
+    SI la deuxième chance est activée et encore disponible
+        Marquer cette chance comme utilisée.
+        Dire au joueur qu'il peut réessayer.
+        Relancer le chronomètre.
+    SINON
+        Éliminer le joueur.
+        SI un seul joueur reste
+            Terminer la partie.
+        SINON
+            Passer au prochain joueur encore en jeu.
+        FIN SI
+    FIN SI
+
+9. CHRONOMÈTRE
+    SI la durée choisie est « Illimité »
+        Afficher « Illimité ».
+    SINON
+        Afficher le temps restant.
+        Enlever une seconde à chaque seconde.
+        Quand le temps arrive à zéro, traiter une erreur.
+    FIN SI
+
+10. TERMINER LA PARTIE
+    Arrêter le chronomètre.
+    Trouver le dernier joueur encore en jeu.
+    Afficher son nom comme gagnant.
+FIN

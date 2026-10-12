@@ -1,0 +1,202 @@
+/* 1. Couleurs et base */
+:root {
+    --fond: #FFF0E3;
+    --surface: #FFFCF8;
+    --doux: #FBE1D2;
+    --texte: #35231E;
+    --texte-doux: #625049;
+    --bordure: #E6BFAE;
+    --accent: #C95335;
+    --accent-fonce: #A94027;
+    --accent-clair: #F8D6C5;
+    --chance: #F6D58B;
+    --erreur: #9F3027;
+}
+
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    background: var(--fond);
+    color: var(--texte);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 17px;
+    line-height: 1.5;
+}
+main { width: min(100% - 32px, 720px); margin: 0 auto; padding: 28px 0; }
+.ecran { width: 100%; }
+.cache { display: none !important; }
+
+/* 2. Textes */
+h1, h2, h3, p { margin-top: 0; }
+h1, h2, h3 { line-height: 1.2; letter-spacing: -0.025em; }
+h1 { margin-bottom: 14px; font-size: clamp(36px, 6vw, 50px); font-weight: 650; }
+h2 { margin-bottom: 10px; font-size: 34px; font-weight: 650; }
+h3 { margin-bottom: 0; font-size: 22px; font-weight: 650; }
+.surtitre, .marque {
+    margin-bottom: 9px;
+    color: var(--texte-doux);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+.marque { color: var(--accent); font-size: 16px; }
+.aide, .intro, .consigne-courte { color: var(--texte-doux); }
+.aide { margin-bottom: 0; font-size: 16px; }
+.aide-champ { margin: 8px 0 22px; }
+.intro { max-width: 470px; margin: 0 auto 30px; font-size: 20px; }
+
+/* 3. Cartes et accueil */
+.carte {
+    margin-bottom: 18px;
+    padding: 26px;
+    background: var(--surface);
+    border: 1px solid var(--bordure);
+    border-radius: 20px;
+}
+.accueil {
+    display: flex;
+    min-height: min(720px, calc(100vh - 56px));
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 42px 24px;
+    text-align: center;
+}
+.accueil .marque { margin-bottom: 12px; }
+.accueil .surtitre { margin-bottom: 30px; }
+.accueil h1 { margin-bottom: 18px; font-size: clamp(44px, 8vw, 64px); }
+.accueil button { width: min(100%, 360px); }
+.accueil button + button { margin-top: 12px; }
+
+/* 4. Champs et boutons */
+form { margin: 0; }
+label, .label-groupe { display: block; margin-bottom: 8px; font-size: 16px; font-weight: 650; }
+input, select {
+    width: 100%; min-width: 0; min-height: 54px; padding: 12px 14px;
+    background: var(--surface); border: 1px solid var(--bordure); border-radius: 12px;
+    color: var(--texte); font: inherit;
+}
+input::placeholder { color: #77635A; opacity: 1; }
+input:focus, select:focus { outline: 3px solid #E8A48B; outline-offset: 2px; }
+button {
+    min-height: 54px; padding: 13px 20px; background: var(--accent);
+    border: 1px solid var(--accent); border-radius: 13px; color: #FFFFFF;
+    cursor: pointer; font: inherit; font-size: 16px; font-weight: 650;
+}
+button:hover { background: var(--accent-fonce); border-color: var(--accent-fonce); }
+button:focus-visible, summary:focus-visible { outline: 3px solid #E8A48B; outline-offset: 3px; }
+button.secondaire { background: var(--surface); border-color: var(--bordure); color: var(--texte); }
+button.secondaire:hover { background: var(--doux); }
+button.danger { background: var(--surface); border-color: #DDA49A; color: var(--erreur); }
+button.danger:hover { background: #FAE5E0; }
+form > button { width: 100%; margin-top: 14px; }
+.grille-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 20px 0 24px; }
+.grille-3 label { min-height: 24px; }
+.grille { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 24px; }
+.message:empty, .resultat:empty { display: none; }
+.erreur { margin: 12px 0; color: var(--erreur); font-size: 15px; }
+.regles-repli { margin: 18px 0; padding: 16px; background: var(--doux); border-radius: 12px; font-size: 16px; }
+.regles-repli summary { cursor: pointer; font-weight: 650; }
+.regles-repli p { margin: 12px 0 0; color: var(--texte-doux); }
+
+/* 5. Écran de jeu */
+.jeu-entete, .tour-ligne, .section-titre, .proposition-form, .actions-jeu, .actions-decision, .historique-zone summary {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+}
+.jeu-entete { margin-bottom: 16px; padding: 2px 2px 8px; }
+.reference .surtitre { margin-bottom: 5px; }
+.reference h2 { margin: 0; overflow-wrap: anywhere; font-size: clamp(27px, 4vw, 34px); }
+.actions-jeu { flex-shrink: 0; }
+.actions-jeu button { min-height: 46px; padding: 10px 14px; }
+.tour { padding: 24px 26px; }
+.tour-ligne { margin-bottom: 18px; }
+.tour-ligne .surtitre { margin-bottom: 5px; }
+.tour-ligne h1 { margin: 0; font-size: clamp(30px, 4vw, 38px); overflow-wrap: anywhere; }
+.temps-bloc { flex-shrink: 0; text-align: right; }
+.chrono { margin: 3px 0 0; font-size: 30px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.consigne-courte { margin-bottom: 18px; font-size: 16px; }
+.proposition-form { align-items: end; }
+.champ-proposition { flex: 1; min-width: 0; }
+.champ-proposition label { margin-bottom: 7px; }
+.proposition-form button { width: auto; min-width: 120px; margin: 0; }
+.decision { margin-top: 18px; padding: 18px; background: var(--doux); border-radius: 14px; }
+.decision .surtitre { margin-bottom: 8px; }
+.mot-propose { margin-bottom: 10px; font-size: 27px; font-weight: 700; overflow-wrap: anywhere; }
+.aide-decision { margin-bottom: 14px; }
+.actions-decision button { flex: 1; }
+.alerte-similaires { margin: 10px 0; color: #774318; font-size: 15px; }
+.resultat { margin: 14px 0 0; color: var(--texte-doux); font-size: 16px; }
+.joker-bloc {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-top: 18px; padding: 13px 15px; background: var(--chance);
+    border-radius: 12px; font-size: 16px;
+}
+.joker-etat { font-weight: 700; }
+
+/* 6. Joueurs et historique */
+.joueurs-zone { padding: 20px; }
+.section-titre { margin-bottom: 14px; }
+.joueurs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.joueur {
+    display: flex; min-width: 0; flex-direction: column; gap: 4px; padding: 12px;
+    background: var(--fond); border: 1px solid transparent; border-radius: 12px; overflow-wrap: anywhere;
+}
+.joueur strong { font-size: 16px; }
+.joueur span { color: var(--texte-doux); font-size: 13px; }
+.joueur.actuel { background: var(--accent-clair); border-color: #D88970; }
+.joueur.elimine { opacity: 0.65; text-decoration: line-through; }
+.historique-zone { padding: 0; overflow: hidden; }
+.historique-zone summary {
+    min-height: 62px; padding: 17px 20px; cursor: pointer;
+    list-style: none; justify-content: flex-start; font-size: 17px; font-weight: 650;
+}
+.historique-zone summary::-webkit-details-marker { display: none; }
+.historique-zone summary::before { content: "▸"; color: var(--accent); font-size: 22px; }
+.historique-zone[open] summary::before { content: "▾"; }
+.historique-zone summary .aide { margin-left: auto; font-weight: 400; }
+.tableau { padding: 0 18px 18px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; font-size: 15px; }
+caption { padding: 7px 0 10px; color: var(--texte-doux); text-align: left; font-size: 14px; }
+th, td { padding: 11px 8px; border-bottom: 1px solid var(--bordure); }
+th { color: var(--texte-doux); font-weight: 650; }
+
+/* 7. Fin et règles */
+.victoire, .regles-page { max-width: 620px; margin: 0 auto; padding: 32px; }
+.victoire { text-align: center; }
+.victoire h1 { font-size: clamp(38px, 6vw, 52px); }
+.victoire p:not(.surtitre) { color: var(--texte-doux); font-size: 19px; }
+.victoire button { width: 100%; margin-top: 12px; }
+.bloc-regle { padding: 17px 0; border-bottom: 1px solid var(--bordure); }
+.bloc-regle h3 { margin-bottom: 7px; font-size: 21px; }
+.bloc-regle p, .note-regles { margin-bottom: 0; color: var(--texte-doux); font-size: 17px; }
+.note-regles { margin: 20px 0; }
+.regles-page > button { width: 100%; margin-top: 8px; }
+
+/* 8. Téléphones */
+@media (max-width: 600px) {
+    main { width: min(100% - 24px, 720px); padding: 12px 0; }
+    .carte { padding: 20px; border-radius: 16px; }
+    .accueil { min-height: calc(100vh - 24px); padding: 34px 12px; }
+    .accueil h1 { font-size: clamp(42px, 11vw, 56px); }
+    .intro { font-size: 19px; }
+    .grille-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .grille-3 > div:last-child { grid-column: 1 / -1; }
+    .jeu-entete { align-items: flex-start; }
+    .actions-jeu { gap: 7px; }
+    .actions-jeu button { padding: 9px 11px; font-size: 15px; }
+    .tour { padding: 20px; }
+    .joueurs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .proposition-form { align-items: stretch; flex-direction: column; }
+    .proposition-form button { width: 100%; }
+    .historique-zone summary { padding: 16px; gap: 10px; font-size: 16px; }
+    .historique-zone summary .aide { white-space: nowrap; }
+    .victoire, .regles-page { padding: 24px 20px; }
+}
+@media (max-width: 380px) {
+    body { font-size: 16px; }
+    .proposition-form { align-items: stretch; flex-direction: column; }
+    .proposition-form button { width: 100%; }
+    .actions-jeu button { font-size: 14px; padding: 8px 9px; }
+    .tour-ligne { align-items: flex-start; }
+    .chrono { font-size: 25px; }
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- 1. Informations de la page -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Le Mot Passant : un jeu de mots simple à jouer entre amis.">
+    <meta name="theme-color" content="#FFF0E3">
+    <title>Le Mot Passant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+    <!-- 2. Page d'accueil -->
+    <section id="accueil" class="ecran accueil">
+        <p class="marque">LE MOT PASSANT</p>
+        <p class="surtitre">UN JEU DE MOTS ENTRE AMIS</p>
+        <h1>Un mot.<br>À ton tour.</h1>
+        <p class="intro">Choisis un mot. À tour de rôle, propose un mot ou une expression qui va avec. Le dernier joueur en jeu gagne.</p>
+        <button id="commencer" type="button">Nouvelle partie</button>
+        <button id="ouvrir-regles" class="secondaire" type="button">Voir les règles</button>
+    </section>
+
+    <!-- 3. Page de configuration -->
+    <section id="configuration" class="ecran cache">
+        <div class="carte">
+            <p class="surtitre">NOUVELLE PARTIE</p>
+            <h2>Préparer la partie</h2>
+            <p class="aide">Choisis un mot, les joueurs et les options de la partie.</p>
+
+            <form id="formulaire-configuration">
+                <label for="mot-depart">Mot de départ</label>
+                <input id="mot-depart" type="text" placeholder="Choisis un mot de départ" required>
+                <p class="aide aide-champ">Exemple : Voiture, ordinateur, vélo...</p>
+
+                <div class="grille-3">
+                    <div>
+                        <label for="nombre-joueurs">Nombre de joueurs</label>
+                        <select id="nombre-joueurs">
+                            <option value="2">2 joueurs</option>
+                            <option value="3">3 joueurs</option>
+                            <option value="4">4 joueurs</option>
+                            <option value="5">5 joueurs</option>
+                            <option value="6">6 joueurs</option>
+                            <option value="7">7 joueurs</option>
+                            <option value="8">8 joueurs</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="duree">Temps par tour</label>
+                        <select id="duree">
+                            <option value="15">15 secondes</option>
+                            <option value="30" selected>30 secondes</option>
+                            <option value="45">45 secondes</option>
+                            <option value="0">Illimité</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="activer-joker">Deuxième chance</label>
+                        <select id="activer-joker">
+                            <option value="oui" selected>Activée</option>
+                            <option value="non">Désactivée</option>
+                        </select>
+                    </div>
+                </div>
+
+                <p class="label-groupe">Nom de chaque joueur</p>
+                <div id="noms-joueurs" class="grille"></div>
+
+                <details class="regles-repli">
+                    <summary>Les règles en bref</summary>
+                    <p>Chacun son tour, propose un mot ou une expression qui va avec le mot de départ.</p>
+                    <p>Un mot déjà dit est bloqué. Le groupe peut refuser un mot trop ressemblant ou qui ne va pas avec le mot de départ.</p>
+                    <p>Une erreur utilise la deuxième chance si elle est activée. Sans chance, le joueur sort du jeu.</p>
+                </details>
+
+                <p id="erreur-configuration" class="message erreur"></p>
+                <button type="submit">Commencer la partie</button>
+                <button id="retour" class="secondaire" type="button">Retour à l'accueil</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 4. Page de jeu -->
+    <section id="jeu" class="ecran cache">
+        <header class="jeu-entete">
+            <div class="reference">
+                <p class="surtitre">MOT DE DÉPART</p>
+                <h2 id="mot-reference"></h2>
+            </div>
+            <div class="actions-jeu">
+                <button id="regles-jeu" class="secondaire" type="button">Règles</button>
+                <button id="quitter" class="secondaire" type="button">Quitter</button>
+            </div>
+        </header>
+
+        <section class="carte tour">
+            <div class="tour-ligne">
+                <div>
+                    <p class="surtitre">C'EST AU TOUR DE</p>
+                    <h1 id="joueur-actuel">Joueur 1</h1>
+                </div>
+                <div class="temps-bloc">
+                    <span class="aide">Temps restant</span>
+                    <p id="chrono" class="chrono">30 s</p>
+                </div>
+            </div>
+
+            <p class="consigne-courte">Écris un mot ou une expression qui va avec le mot de départ. Le groupe dira oui ou non.</p>
+
+            <form id="formulaire-mot" class="proposition-form">
+                <div class="champ-proposition">
+                    <label for="mot-propose">Ton mot ou ton expression</label>
+                    <input id="mot-propose" type="text" placeholder="Mot choisi par le joueur" autocomplete="off">
+                </div>
+                <button type="submit">Proposer</button>
+            </form>
+
+            <div id="decision" class="decision cache">
+                <p class="surtitre">DÉCISION DU GROUPE</p>
+                <p id="mot-a-decider" class="mot-propose"></p>
+                <div id="alerte-similaires" class="alerte-similaires cache"></div>
+                <p class="aide aide-decision">Est-ce que ce mot va avec le mot de départ ? Choisissez oui ou non.</p>
+                <div class="actions-decision">
+                    <button id="accepter" type="button">Accepter</button>
+                    <button id="refuser" type="button" class="danger">Refuser</button>
+                </div>
+            </div>
+
+            <p id="resultat" class="resultat" aria-live="polite"></p>
+
+            <div class="joker-bloc">
+                <strong>Deuxième chance</strong>
+                <span id="joker-statut" class="joker-etat">Disponible</span>
+            </div>
+        </section>
+
+        <section class="carte joueurs-zone">
+            <div class="section-titre">
+                <h3>Joueurs</h3>
+                <p id="compteur-joueurs" class="aide"></p>
+            </div>
+            <div id="joueurs" class="joueurs"></div>
+        </section>
+
+        <!-- Tableau. -->
+        <details id="zone-historique" class="carte historique-zone">
+            <summary>
+                <span>Historique des propositions</span>
+                <span id="compteur-historique" class="aide">0 proposition</span>
+            </summary>
+            <div class="tableau">
+                <table>
+                    <caption>Les propositions les plus récentes apparaissent en premier.</caption>
+                    <thead>
+                        <tr>
+                            <th>Joueur</th>
+                            <th>Proposition</th>
+                            <th>Résultat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-historique"></tbody>
+                </table>
+            </div>
+        </details>
+    </section>
+
+    <!-- 5. Page de fin de partie -->
+    <section id="fin" class="ecran cache">
+        <div class="carte victoire">
+            <p class="surtitre">FIN DE PARTIE</p>
+            <h1 id="gagnant">Il reste un joueur.</h1>
+            <p>La partie est terminée.</p>
+            <button id="rejouer" type="button">Rejouer avec les mêmes joueurs</button>
+            <button id="nouvelle" class="secondaire" type="button">Changer les réglages</button>
+        </div>
+    </section>
+
+    <!-- 6. Les règles complètes -->
+    <section id="regles" class="ecran cache">
+        <div class="carte regles-page">
+            <p class="surtitre">LES RÈGLES</p>
+            <h2>Comment jouer ?</h2>
+            <div class="bloc-regle">
+                <h3>1. Choisis un mot</h3>
+                <p>Choisis un mot de départ, par exemple « voiture ». Il ne change plus.</p>
+            </div>
+            <div class="bloc-regle">
+                <h3>2. Chacun son tour</h3>
+                <p>À ton tour, écris un mot ou une expression qui va avec le mot de départ.</p>
+            </div>
+            <div class="bloc-regle">
+                <h3>3. Un mot ou une expression</h3>
+                <p>Tu peux proposer un synonyme (un mot qui veut dire pareil), ou une expression du rap ou d’Internet. Le groupe doit comprendre le lien.</p>
+            </div>
+            <div class="bloc-regle">
+                <h3>4. Le groupe choisit</h3>
+                <p>Les autres joueurs disent si le mot va avec le mot de départ. Ils peuvent dire oui ou non.</p>
+            </div>
+            <div class="bloc-regle">
+                <h3>5. Ne répète pas un mot</h3>
+                <p>Un mot déjà dit est bloqué par le jeu. Si un mot ressemble trop à un autre, ou ne va pas avec le mot de départ, le groupe peut le refuser.</p>
+            </div>
+            <div class="bloc-regle">
+                <h3>6. Garde ta chance</h3>
+                <p>Un refus ou un temps fini fait perdre une chance. Si la deuxième chance est activée, tu peux faire une erreur et réessayer. Après, une autre erreur te fait sortir. Si elle est désactivée, une erreur te fait sortir.</p>
+            </div>
+            <p class="note-regles">Le dernier joueur encore en jeu gagne.</p>
+            <button id="fermer-regles" type="button">Retour</button>
+        </div>
+    </section>
+</main>
+
+<!-- 7. Script -->
+<script src="script.js"></script>
+</body>
+</html>
